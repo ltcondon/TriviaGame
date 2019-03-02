@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Dynamic Quiz Project</title>
+    <title>Oscar Trivia</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -13,11 +13,20 @@
 
 </nav>
 
-<div class= jumbotron>
-  <div class= container id= question-box></div>
-  <div class= container id= timer></div>
-</div>
+    <div class = container id = large-logo>
+        <img src = # class = image style = "display: block" id = logo>
+        <h1 id = subheader>Trivia Challenge!</h1>
+    </div>
 
+    <div class= container id= question-box></div>
+      <div class= container-fluid id= timer>Time Remaining: <span id=time-remaining></span></div>    
+        <div class= row>
+          <div class= col-8 id = random-gif></div>
+          <div class= col-4 id = question></div>
+        </div>
+        <div class= container-fluid id = progress-bar>
+            <h3>Questions Remaining: <span id = questions-remaining>10</span></h3>
+        </div>
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
