@@ -3,43 +3,43 @@
     var questions = [{
       question: "Who is the youngest-ever Oscar winner?",
       choices: ["Tatum O’Neal", "Jacob Tremblay", "Anna Paquin", "Patty Duke"],
-      correctAnswer: "Tatum O'Neil"
+      answer: "Tatum O'Neil"
     }, {
       question: "Who was the first black actor to win an Oscar?",
       choices: ["Hattie McDaniel", "Sidney Poitier", "Denzel Washington", "Halle Berry"],
-      correctAnswer: "Hattie McDaniel"
+      answer: "Hattie McDaniel"
     }, {
       question: "Which of these films received zero nominations?",
       choices: ["The Big Lebowski", "Steel Magnolias", "Harry Potter and the Sorcerer’s Stone", "The Truman Show"],
-      correctAnswer: "The Big Lebowski"
+      answer: "The Big Lebowski"
     }, {
       question: "What was the longest movie ever nominated for Best Picture?",
       choices: ["Cleopatra", "Lawrence of Arabia", "Gone With The Wind", "The Ten Commandments"],
-      correctAnswer: "Cleopatra"
+      answer: "Cleopatra"
     }, {
       question: "Which of the four women to play the lead in 'A Star is Born' was not nominated for her performance",
       choices: ["Barbra Streisand", "Lady Gaga", "Janet Gaynor", "Judy Garland"],
-      correctAnswer: "Barbra Streisand"
+      answer: "Barbra Streisand"
     }, {
       question: "How many Oscar nominations has Meryl Streep received?",
       choices: [17, 21, 11, 29],
-      correctAnswer: 21
+      answer: 21
     }, {
       question: "Which of these men has never won for directing?",
       choices: ["Stanley Kubrick", "Steven Spielberg", "James Cameron", "Ron Howard"],
-      correctAnswer: "Stanley Kubrick"
+      answer: "Stanley Kubrick"
     }, {
       question: "What was the first technicolor movie to win Best Picture?",
       choices: ["The Wizard of Oz", "Gone With The Wind", "The Adventures of Robin Hood", "Snow White"],
-      correctAnswer: "Gone With The Wind"
+      answer: "Gone With The Wind"
     }, {
       question: "Which film won Best Picture in 1991?",
       choices: ["Goodfellas", "Dances With Wolves", "The Godfather Part III", "Ghost"],
-      correctAnswer: "Dances With Wolves"
+      answer: "Dances With Wolves"
     }, {
       question: "Which Disney film was nominated for Best Picture?",
       choices: ["Snow White", "The Lion King", "Beauty and the Beast", "Aladdin"],
-      correctAnswer: "Beauty and the Beast"
+      answer: "Beauty and the Beast"
     }];
     
 
@@ -49,14 +49,15 @@
     var currentQuestion;
     var quiz = $('#question-box'); //Quiz div object
     var score = 0
-    var timeRemaining = 1500
+    var timeRemaining;
     var selectedAnswer;
     var correctAnswer;
+    var timerRunning = false;
 
 
     
     function startScreen() {
-
+    score = 0;
     // Slide in large logo (left), subtitle (right), and fade in start button:
     $("#logo").addClass('animated slideInLeft').one('animationend', function() {
         $("#logo").removeClass('animated slideInLeft')});
@@ -76,26 +77,103 @@
         $("#start").fadeOut();
         questionCounter = 9;
         displayQuestion()
-        start()
     })
 }
     function displayQuestion() {
         $("#questions").fadeIn();
+        $("#timer").fadeIn()
+        startTimer()
+        // Pull random question-object from array, remove from array, and store in variable "currentQuestion":
+        if(questions.length > 0 ){
+            currentQuestion= questions.pop();
+            // Append current question to 'question' div:
+            $("#questions").prepend(currentQuestion.question);
+            correctAnswer = currentQuestion.answer;
+            console.log(currentQuestion.question);
+             for (var i=0; i<currentQuestion.choices.length; i++) {
+                var answerButton = $("<button " + "class=" + "question-choice" + "/>");
+                answerButton.val(currentQuestion.choices[i]);
+                answerButton.addClass("button");
+                answerButton.addClass("btn-primary");
+                answerButton.text(currentQuestion.choices[i]);
+                $("#questions").append(answerButton);
+            }
+            $(".question-choice").on("click", function(){
+                var userChoice = $(this).val();
+                console.log(userChoice);
+                if (userChoice === correctAnswer) {
+                    score++;
+                }
+                $("#questions").fadeOut();
+                setTimeout(function() {
+                    $("#questions").empty();
+                    nextQuestion();
+              }, 350); 
+            }) 
+        }
+        if (timeRemaining = 0) {
+            endScreen();
+        }
     }
+    
+    function nextQuestion() {
+        if (questions.length > 0) {
+            displayQuestion();
+            timeRemaining = 59;
+        }
+        else {
+        endScreen()
+
+        }
+    }
+
+    function endScreen() {
+        $("#questions").fadeOut();
+        $("#timer").fadeOut();
+        $("#final-score").text(score);
+        if (score > 7) {
+            $("endScreenText").text("Nice work!!")
+        }
+        else if (score < 4) {
+            $("endScreenText").text("Not too shabby!")
+        }
+        else {
+            $("endScreenText").text("Ouch!")
+        }
+        setTimeout(function(){ 
+            $("#end-screen").fadeIn();
+        }, 550);
+
+        setTimeout(function(){ $("#questions").empty()}, 550);
+        $("#reset-button").on("click", function() {
+            $("#end-screen").fadeOut()
+            setTimeout(function(){ 
+                startScreen();
+            }, 850);
+        })
+    }
+    // Slide out left "question-box div"
+    // set timeout to Empty the "question-box" div after it is hidden from the page:
+    // reset timeRemaining
+    
 startScreen();
 
 // Create a timer with start/stop functions:
 
-function start() {
-    var timeLeft = 59;
+function startTimer() {
+  if (!timerRunning) {
+    timeRemaining = 59;
     var quizTimer = setInterval(function(){
-      $("#time-remaining").text(timeLeft);
-      timeLeft--;
-      if(timeLeft <= 0){
+      $("#time-remaining").text(timeRemaining+ " seconds");
+      timeRemaining--;
+      if(timeRemaining < 0){
         clearInterval(quizTimer);
-        document.getElementById("countdown").innerHTML = "Finished"
+        $("#time-remaining").text("Time's Up!")
       }
     }, 1000);
+    timerRunning = true;
+  }
+    
 }
 
 
@@ -170,10 +248,7 @@ function start() {
         
 //     // if timeRemaining === 0, loseScreen()
 
-//     // function nextQuestion()
-//     // Slide out left "question-box div"
-//     // set timeout to Empty the "question-box" div after it is hidden from the page:
-//     // reset timeRemaining
+
 
 //             /// ---- repeating some displayQuestion() functionality: ----
 

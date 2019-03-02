@@ -5,6 +5,12 @@ body {
     text-align: center;
 }
 
+#red-carpet {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 #start-button {
     display: block;
     margin-left: auto;
@@ -44,11 +50,16 @@ body {
 }
 
 #timer {
+    display: none;
     margin-left: auto;
     margin-right: auto;
 }
 
 #large-logo {
     padding-top: 20px;
+}
+
+#end-screen {
+    display: none;
 }
 
