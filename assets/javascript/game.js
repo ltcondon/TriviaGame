@@ -108,8 +108,8 @@
 
       scoreDisplay.text("Score: " + score)
       $("#gif-image").attr("src", questionGif); 
-      timeDisplay.css('opacity', '1');       
       startTimer()  
+      timeDisplay.css('opacity', '1');       
       questionDisplay.empty();
       answerDisplay.empty()
       // Pull random question-object from array, remove from array, and store in variable "currentQuestion":
@@ -212,6 +212,7 @@
       }
       else {
         questionDisplay.text("Ouch...")
+        $("#gif-image").attr("src", wrongGif);
         answerDisplay.append("You answered " + score + " questions correctly." + "<br><br>")
         answerDisplay.append("You should watch more TV.....")
       }
@@ -223,7 +224,9 @@
         questionDisplay.empty();
         timeDisplay.empty();
         answerDisplay.empty();
+        scoreDisplay.empty();
         startScreen();
+        timerRunning = false;
     })
   }
     // Slide out left "question-box div"

@@ -18,12 +18,15 @@ h3 {
 }
 
 #main-container {
+    /* background-image: url("https://images.freeimages.com/images/large-previews/1ef/red-curtain-1203512.jpg"); */
     height: 700px;
     width: 80%;
 }
 
+
 #lower-section {
     margin-top: 10%;
+    
 
 }
 
